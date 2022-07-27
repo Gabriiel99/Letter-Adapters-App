@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,8 +52,10 @@ class LetterListFragment : Fragment() {
                 recyclerView = binding.recyclerView
 
                 SettingsDataStore = SettingsDataStore(requireContext())
-
-                chooseLayout()
+                SettingsDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner, { value ->
+                        isLinearLayoutManager = value
+                        chooseLayout()
+                })
         }
 
         /**
